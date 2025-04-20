@@ -1,29 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-const ProgressCircle = ({ 
-  progress, 
-  size = 256, 
-  strokeWidth = 4, 
-  circleColor = "#E0E0E0", 
-  progressColor = "#8ab336" 
+const ProgressCircle = ({
+  progress,
+  size = 256,
+  strokeWidth = 16,
+  circleColor = "#E0E0E0",
+  progressColor = "#6B8E23"
 }) => {
-  const radius = (size - strokeWidth) / 2;
-  const circumference = radius * 2 * Math.PI;
-  const offset = circumference - (progress / 100) * circumference;
+  const [offset, setOffset] = useState(0);
+  
+  // Calculate center position and radius
+  const center = size / 2;
+  const radius = center - strokeWidth / 2;
+  
+  // Calculate the circumference of the circle
+  const circumference = 2 * Math.PI * radius;
+  
+  useEffect(() => {
+    // Calculate the offset based on the progress
+    const progressOffset = ((100 - progress) / 100) * circumference;
+    setOffset(progressOffset);
+  }, [progress, circumference]);
   
   return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="progress-circle">
+    <svg
+      className="progress-circle"
+      width={size}
+      height={size}
+      viewBox={`0 0 ${size} ${size}`}
+      style={{ transform: 'rotate(-90deg)' }}
+    >
+      {/* Background circle */}
       <circle
-        cx={size / 2}
-        cy={size / 2}
+        cx={center}
+        cy={center}
         r={radius}
         fill="none"
         stroke={circleColor}
         strokeWidth={strokeWidth}
       />
+      
+      {/* Progress circle */}
       <circle
-        cx={size / 2}
-        cy={size / 2}
+        cx={center}
+        cy={center}
         r={radius}
         fill="none"
         stroke={progressColor}
@@ -31,6 +51,7 @@ const ProgressCircle = ({
         strokeDasharray={circumference}
         strokeDashoffset={offset}
         strokeLinecap="round"
+        style={{ transition: 'stroke-dashoffset 0.5s ease-in-out' }}
       />
     </svg>
   );

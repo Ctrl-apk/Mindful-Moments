@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useMindful } from '@/context/MindfulContext';
 import { Button } from '@/components/ui/button';
 import ProgressCircle from '@/components/shared/ProgressCircle';
