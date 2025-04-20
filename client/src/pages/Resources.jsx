@@ -18,6 +18,7 @@ const Resources = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [allResources, setAllResources] = useState([]);
   const [featuredResources, setFeaturedResources] = useState([]);
+  const [categories, setCategories] = useState([]);
   
   // Fetch resources from API
   useEffect(() => {
@@ -35,6 +36,11 @@ const Resources = () => {
         
         setAllResources(allResourcesData);
         setFeaturedResources(featuredResourcesData);
+        
+        // Extract unique categories
+        const uniqueCategories = [...new Set(allResourcesData.map(r => r.category))];
+        setCategories(uniqueCategories);
+        
         setIsLoading(false);
       } catch (error) {
         console.error('Error fetching resources:', error);
@@ -52,7 +58,7 @@ const Resources = () => {
   
   // Get count of resources by type
   const getTypeCount = (type) => {
-    return allResources.filter(r => r.type.toUpperCase() === type).length;
+    return allResources.filter(r => r.type?.toUpperCase() === type).length;
   };
 
   if (isLoading) {
@@ -72,7 +78,7 @@ const Resources = () => {
         {/* Featured Resource Skeleton */}
         <section className="mb-8">
           <Skeleton className="h-6 w-40 mb-4" />
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+          <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-sm overflow-hidden">
             <div className="md:flex">
               <Skeleton className="md:w-1/3 h-48" />
               <div className="p-6 md:w-2/3 space-y-4">
@@ -108,71 +114,64 @@ const Resources = () => {
     );
   }
   
+  // Get all resource types
+  const resourceTypes = ['ARTICLE', 'VIDEO', 'PODCAST', 'DOWNLOAD'];
+  
   return (
     <div className="container mx-auto px-4 py-6">
-      <h2 className="font-heading text-2xl font-semibold text-neutral-700 mb-6">Mindfulness Resources</h2>
+      <h2 className="font-heading text-2xl font-semibold text-neutral-700 dark:text-neutral-200 mb-6">Mindfulness Resources</h2>
       
       {/* Resource Categories */}
       <section className="mb-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <CategoryCard 
-            type="ARTICLE" 
-            count={getTypeCount('ARTICLE')} 
-            onClick={() => setSelectedCategory('article')}
-          />
-          <CategoryCard 
-            type="VIDEO" 
-            count={getTypeCount('VIDEO')} 
-            onClick={() => setSelectedCategory('video')}
-          />
-          <CategoryCard 
-            type="PODCAST" 
-            count={getTypeCount('PODCAST')} 
-            onClick={() => setSelectedCategory('podcast')}
-          />
-          <CategoryCard 
-            type="DOWNLOAD" 
-            count={getTypeCount('DOWNLOAD')} 
-            onClick={() => setSelectedCategory('download')}
-          />
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          {resourceTypes.map(type => (
+            <CategoryCard 
+              key={type}
+              type={type} 
+              count={getTypeCount(type)} 
+              onClick={() => setSelectedCategory(type.toLowerCase())}
+            />
+          ))}
         </div>
       </section>
       
       {/* Featured Resources */}
       <section className="mb-8">
-        <h3 className="font-heading text-xl font-semibold text-neutral-700 mb-4">Featured Resources</h3>
+        <h3 className="font-heading text-xl font-semibold text-neutral-700 dark:text-neutral-200 mb-4">Featured Resources</h3>
         
         {featuredResources.length > 0 ? (
-          <ResourceCard resource={featuredResources[0]} featured={true} />
+          <div className="space-y-4">
+            {featuredResources.map(resource => (
+              <ResourceCard key={resource.id} resource={resource} featured={true} />
+            ))}
+          </div>
         ) : (
-          <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-            <p className="text-neutral-600">No featured resources currently available.</p>
+          <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-sm p-6 text-center">
+            <p className="text-neutral-600 dark:text-neutral-300">No featured resources currently available.</p>
           </div>
         )}
       </section>
       
       {/* Latest Resources */}
       <section>
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="font-heading text-xl font-semibold text-neutral-700">Latest Resources</h3>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+          <h3 className="font-heading text-xl font-semibold text-neutral-700 dark:text-neutral-200">Latest Resources</h3>
           <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full sm:w-[180px]">
               <SelectValue placeholder="All Categories" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Categories</SelectItem>
-              <SelectItem value="beginners">Beginners</SelectItem>
-              <SelectItem value="stress">Stress</SelectItem>
-              <SelectItem value="anxiety">Anxiety</SelectItem>
-              <SelectItem value="sleep">Sleep</SelectItem>
-              <SelectItem value="science">Science</SelectItem>
+              {categories.map(category => (
+                <SelectItem key={category} value={category}>{category.charAt(0).toUpperCase() + category.slice(1)}</SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
         
         {filteredResources.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-            <p className="text-neutral-600">No resources found in this category.</p>
+          <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-sm p-6 text-center">
+            <p className="text-neutral-600 dark:text-neutral-300">No resources found in this category.</p>
           </div>
         ) : (
           <div className="space-y-4">

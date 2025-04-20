@@ -2,24 +2,40 @@ import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Clock, ExternalLink } from 'lucide-react';
+import { Clock, ExternalLink, FileText, Video, Headphones, Download, File } from 'lucide-react';
 
 const ResourceCard = ({ resource, featured = false }) => {
   const { title, description, type, duration, imageUrl, contentUrl } = resource;
   
   // Type-specific color
   const getTypeColor = (type) => {
-    switch (type.toUpperCase()) {
+    switch (type?.toUpperCase()) {
       case 'ARTICLE':
-        return 'bg-secondary-light/20 text-secondary-dark';
+        return 'bg-secondary-light/20 text-secondary-dark dark:bg-secondary-dark/30 dark:text-secondary-light';
       case 'VIDEO':
-        return 'bg-accent-light/20 text-accent-dark';
+        return 'bg-accent-light/20 text-accent-dark dark:bg-accent-dark/30 dark:text-accent-light';
       case 'PODCAST':
-        return 'bg-primary-light/20 text-primary-dark';
+        return 'bg-primary-light/20 text-primary-dark dark:bg-primary-dark/30 dark:text-primary-light';
       case 'DOWNLOAD':
-        return 'bg-neutral-200 text-neutral-500';
+        return 'bg-neutral-200 text-neutral-500 dark:bg-neutral-700 dark:text-neutral-300';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
+    }
+  };
+  
+  // Get appropriate icon based on content type
+  const getTypeIcon = (type, size = 24) => {
+    switch (type?.toUpperCase()) {
+      case 'ARTICLE':
+        return <FileText size={size} className="text-secondary-dark dark:text-secondary-light" />;
+      case 'VIDEO':
+        return <Video size={size} className="text-accent-dark dark:text-accent-light" />;
+      case 'PODCAST':
+        return <Headphones size={size} className="text-primary dark:text-primary-light" />;
+      case 'DOWNLOAD':
+        return <Download size={size} className="text-neutral-500 dark:text-neutral-300" />;
+      default:
+        return <File size={size} className="text-neutral-500 dark:text-neutral-300" />;
     }
   };
   
@@ -35,16 +51,16 @@ const ResourceCard = ({ resource, featured = false }) => {
         'DOWNLOAD': 'https://mindfulnessexercises.com/free-mindfulness-exercises/'
       };
       
-      window.open(defaultUrls[type.toUpperCase()] || 'https://www.mindful.org', '_blank', 'noopener,noreferrer');
+      window.open(defaultUrls[type?.toUpperCase()] || 'https://www.mindful.org', '_blank', 'noopener,noreferrer');
     }
   };
   
   // Featured resource layout
   if (featured) {
     return (
-      <Card className="bg-white rounded-lg shadow-sm overflow-hidden">
+      <Card className="bg-white dark:bg-neutral-800 rounded-lg shadow-sm overflow-hidden border-0">
         <div className="md:flex">
-          <div className="md:w-1/3 h-48 md:h-auto bg-primary-light/20">
+          <div className="md:w-1/3 h-48 md:h-auto bg-primary-light/20 dark:bg-primary-dark/20">
             {imageUrl ? (
               <img 
                 src={imageUrl} 
@@ -52,40 +68,26 @@ const ResourceCard = ({ resource, featured = false }) => {
                 className="w-full h-full object-cover" 
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-primary-light/20">
-                {type === 'ARTICLE' ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
-                  </svg>
-                ) : type === 'VIDEO' ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-dark">
-                    <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                    <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-                  </svg>
-                ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                    <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                  </svg>
-                )}
+              <div className="w-full h-full flex items-center justify-center">
+                {getTypeIcon(type, 48)}
               </div>
             )}
           </div>
           <div className="p-6 md:w-2/3">
             <div className="flex justify-between items-start mb-2">
-              <h4 className="font-heading font-semibold text-lg text-neutral-700">{title}</h4>
+              <h4 className="font-heading font-semibold text-lg text-neutral-700 dark:text-neutral-200">{title}</h4>
               <Badge className={getTypeColor(type)}>{type}</Badge>
             </div>
-            <p className="text-neutral-600 mb-4">{description}</p>
+            <p className="text-neutral-600 dark:text-neutral-300 mb-4 line-clamp-3">{description}</p>
             <div className="flex justify-between items-center">
               {duration && (
-                <div className="flex items-center text-sm text-neutral-500">
+                <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400">
                   <Clock className="mr-1 h-4 w-4" />
                   <span>{duration}</span>
                 </div>
               )}
               <Button 
-                className="bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center"
+                className="bg-primary hover:bg-primary-dark text-white dark:bg-primary-dark dark:hover:bg-primary font-medium py-2 px-4 rounded-lg transition-colors flex items-center"
                 onClick={handleResourceOpen}
               >
                 <span className="mr-1">Open</span>
@@ -100,8 +102,8 @@ const ResourceCard = ({ resource, featured = false }) => {
   
   // Default compact resource layout
   return (
-    <Card className="bg-white rounded-lg shadow-sm p-4 flex h-full">
-      <div className="w-16 h-16 rounded bg-secondary-light/20 mr-4 flex-shrink-0 flex items-center justify-center">
+    <Card className="bg-white dark:bg-neutral-800 rounded-lg shadow-sm p-4 flex h-full border-0">
+      <div className="w-16 h-16 rounded bg-secondary-light/20 dark:bg-secondary-dark/20 mr-4 flex-shrink-0 flex items-center justify-center">
         {imageUrl ? (
           <img 
             src={imageUrl} 
@@ -109,39 +111,25 @@ const ResourceCard = ({ resource, featured = false }) => {
             className="w-full h-full object-cover rounded" 
           />
         ) : (
-          type === 'ARTICLE' ? (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-secondary-dark">
-              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
-            </svg>
-          ) : type === 'VIDEO' ? (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-dark">
-              <polygon points="23 7 16 12 23 17 23 7"></polygon>
-              <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-            </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-              <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-              <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-            </svg>
-          )
+          getTypeIcon(type, 24)
         )}
       </div>
       <div className="flex-grow flex flex-col">
         <div className="flex justify-between items-start">
-          <h4 className="font-heading font-semibold text-neutral-700">{title}</h4>
+          <h4 className="font-heading font-semibold text-neutral-700 dark:text-neutral-200 line-clamp-1">{title}</h4>
           <Badge className={getTypeColor(type)}>{type}</Badge>
         </div>
-        <p className="text-sm text-neutral-600 my-1 flex-grow">{description}</p>
+        <p className="text-sm text-neutral-600 dark:text-neutral-300 my-1 flex-grow line-clamp-2">{description}</p>
         <div className="flex justify-between items-center mt-1">
           {duration && (
-            <div className="flex items-center text-xs text-neutral-500">
+            <div className="flex items-center text-xs text-neutral-500 dark:text-neutral-400">
               <Clock className="mr-1 h-3 w-3" />
               <span>{duration}</span>
             </div>
           )}
           <Button 
             size="sm" 
-            className="text-xs py-1 px-2 bg-primary hover:bg-primary-dark text-white rounded"
+            className="text-xs py-1 px-2 bg-primary hover:bg-primary-dark dark:bg-primary-dark dark:hover:bg-primary text-white rounded"
             onClick={handleResourceOpen}
           >
             Open
