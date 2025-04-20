@@ -26,6 +26,16 @@ const ResourceCard = ({ resource, featured = false }) => {
   const handleResourceOpen = () => {
     if (contentUrl) {
       window.open(contentUrl, '_blank', 'noopener,noreferrer');
+    } else {
+      // If no content URL is provided, open a default resource based on type
+      const defaultUrls = {
+        'ARTICLE': 'https://www.mindful.org/how-to-meditate/',
+        'VIDEO': 'https://www.youtube.com/watch?v=inpok4MKVLM',
+        'PODCAST': 'https://www.youtube.com/watch?v=ZToicYcHIOU',
+        'DOWNLOAD': 'https://mindfulnessexercises.com/free-mindfulness-exercises/'
+      };
+      
+      window.open(defaultUrls[type.toUpperCase()] || 'https://www.mindful.org', '_blank', 'noopener,noreferrer');
     }
   };
   
