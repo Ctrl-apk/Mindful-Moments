@@ -34,17 +34,6 @@ npm install
 npm run dev
 ```
 
-## Deployment Steps on Replit
-
-1. Click the "Deploy" button in the top navigation bar
-2. Select "Deploy to Production"
-3. Configure your deployment:
-   - Build Command: `npm run build`
-   - Run Command: `npm run start`
-   - Select a subdomain for your app
-4. Click "Deploy" to start the deployment process
-
-
 ## Environment Variables Setup
 
 This application requires two important environment variables:
