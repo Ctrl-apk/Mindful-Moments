@@ -36,47 +36,29 @@ const Journal = () => {
   const [content, setContent] = useState('');
   const [tags, setTags] = useState('');
   const [error, setError] = useState('');
-  const [editingEntry, setEditingEntry] = useState<JournalEntry | null>(null);
-  
-  // Sort journal entries
+  const [editingEntry, setEditingEntry] = useState(null);
+
   const sortedEntries = [...journalEntries].sort((a, b) => {
     const dateA = new Date(a.date).getTime();
     const dateB = new Date(b.date).getTime();
-    
-    if (sortOrder === 'newest') {
-      return dateB - dateA;
-    } else if (sortOrder === 'oldest') {
-      return dateA - dateB;
-    } else if (sortOrder === 'mood') {
-      // Sort by mood (great → good → neutral → low)
-      const moodOrder: Record<string, number> = { 'great': 0, 'good': 1, 'neutral': 2, 'low': 3 };
+    if (sortOrder === 'newest') return dateB - dateA;
+    if (sortOrder === 'oldest') return dateA - dateB;
+    if (sortOrder === 'mood') {
+      const moodOrder = { 'great': 0, 'good': 1, 'neutral': 2, 'low': 3 };
       return moodOrder[a.mood] - moodOrder[b.mood];
     }
-    
     return 0;
   });
-  
-  // Handle form submission
+
   const handleSubmit = async () => {
     if (!title.trim() || !content.trim() || !mood) {
       setError('Please fill in all required fields.');
       return;
     }
-    
     if (!user) return;
-    
     try {
       const tagArray = tags.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
-      
-      await createJournalEntry({
-        userId: user.id,
-        title,
-        content,
-        mood,
-        tags: tagArray
-      });
-      
-      // Reset form
+      await createJournalEntry({ userId: user.id, title, content, mood, tags: tagArray });
       setTitle('');
       setContent('');
       setTags('');
@@ -88,9 +70,8 @@ const Journal = () => {
       setError('An error occurred. Please try again.');
     }
   };
-  
-  // Handle editing entries
-  const handleEdit = (entry: JournalEntry) => {
+
+  const handleEdit = (entry) => {
     setEditingEntry(entry);
     setTitle(entry.title);
     setContent(entry.content);
@@ -98,13 +79,11 @@ const Journal = () => {
     setTags(entry.tags.join(', '));
     setIsDialogOpen(true);
   };
-  
-  // Handle deleting entries
-  const handleDelete = async (id: number) => {
-    // Would implement delete functionality here
+
+  const handleDelete = async (id) => {
     console.log(`Deleting entry with ID: ${id}`);
   };
-  
+
   if (!user) {
     return (
       <div className="container mx-auto px-4 py-6">
@@ -113,7 +92,6 @@ const Journal = () => {
           <Skeleton className="h-8 w-64" />
           <Skeleton className="h-10 w-32" />
         </div>
-        
         <section className="mb-8">
           <Card>
             <CardHeader>
@@ -129,12 +107,10 @@ const Journal = () => {
             </CardContent>
           </Card>
         </section>
-        
         <div className="flex justify-between items-center mb-4">
           <Skeleton className="h-6 w-32" />
           <Skeleton className="h-10 w-32" />
         </div>
-        
         {[1, 2].map(i => (
           <div key={i} className="mb-4">
             <Skeleton className="h-24 w-full rounded-lg" />
@@ -143,7 +119,7 @@ const Journal = () => {
       </div>
     );
   }
-  
+
   return (
     <div className="container mx-auto px-4 py-6">
       <div className="flex justify-between items-center mb-6">
@@ -158,56 +134,29 @@ const Journal = () => {
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle>Create New Journal Entry</DialogTitle>
-              <DialogDescription>
-                Record your thoughts, feelings, and reflections.
-              </DialogDescription>
+              <DialogDescription>Record your thoughts, feelings, and reflections.</DialogDescription>
             </DialogHeader>
-            
             <div className="grid gap-4 py-4">
               <div>
                 <Label htmlFor="title">Title</Label>
-                <Input 
-                  id="title" 
-                  value={title} 
-                  onChange={(e) => setTitle(e.target.value)} 
-                  placeholder="Entry title"
-                  className="mt-1"
-                />
+                <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Entry title" className="mt-1" />
               </div>
-              
               <div>
                 <Label>How are you feeling?</Label>
                 <div className="mt-2">
                   <MoodSelector onSelect={setMood} initialMood={mood} />
                 </div>
               </div>
-              
               <div>
                 <Label htmlFor="content">Journal Entry</Label>
-                <Textarea 
-                  id="content" 
-                  value={content} 
-                  onChange={(e) => setContent(e.target.value)} 
-                  placeholder="Write your thoughts here..."
-                  className="mt-1"
-                  rows={6}
-                />
+                <Textarea id="content" value={content} onChange={(e) => setContent(e.target.value)} placeholder="Write your thoughts here..." className="mt-1" rows={6} />
               </div>
-              
               <div>
                 <Label htmlFor="tags">Tags (comma separated)</Label>
-                <Input 
-                  id="tags" 
-                  value={tags} 
-                  onChange={(e) => setTags(e.target.value)}
-                  placeholder="Gratitude, Morning, Work..."
-                  className="mt-1"
-                />
+                <Input id="tags" value={tags} onChange={(e) => setTags(e.target.value)} placeholder="Gratitude, Morning, Work..." className="mt-1" />
               </div>
-              
               {error && <p className="text-red-500 text-sm">{error}</p>}
             </div>
-            
             <DialogFooter>
               <Button variant="outline" onClick={() => setIsDialogOpen(false)}>Cancel</Button>
               <Button onClick={handleSubmit}>Save Entry</Button>
@@ -215,8 +164,6 @@ const Journal = () => {
           </DialogContent>
         </Dialog>
       </div>
-      
-      {/* Mood Tracking */}
       <section className="mb-8">
         <Card className="bg-white rounded-lg shadow-sm">
           <CardHeader>
@@ -227,8 +174,6 @@ const Journal = () => {
           </CardContent>
         </Card>
       </section>
-      
-      {/* Journal Entries */}
       <section>
         <div className="flex justify-between items-center mb-4">
           <h3 className="font-heading text-xl font-semibold text-neutral-700">Your Entries</h3>
@@ -243,19 +188,13 @@ const Journal = () => {
             </SelectContent>
           </Select>
         </div>
-        
         {sortedEntries.length === 0 ? (
           <Card className="bg-white rounded-lg shadow-sm p-6 text-center">
             <p className="text-neutral-600">No journal entries yet. Create your first entry to get started!</p>
           </Card>
         ) : (
           sortedEntries.map(entry => (
-            <JournalEntryCard 
-              key={entry.id} 
-              entry={entry} 
-              onEdit={handleEdit} 
-              onDelete={handleDelete} 
-            />
+            <JournalEntryCard key={entry.id} entry={entry} onEdit={handleEdit} onDelete={handleDelete} />
           ))
         )}
       </section>

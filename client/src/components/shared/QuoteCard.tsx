@@ -1,4 +1,4 @@
-import { Quote } from "@/types";
+import { Quote } from "server";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 

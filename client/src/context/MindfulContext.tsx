@@ -14,7 +14,7 @@ import {
   CreateJournalEntryInput,
   CreateMeditationSessionInput,
   MindfulContextType
-} from '@/types';
+} from 'server';
 
 // Initial values for context
 const initialStats = {

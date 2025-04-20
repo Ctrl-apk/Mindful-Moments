@@ -2,7 +2,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Clock } from 'lucide-react';
-import { Resource } from '@/types';
+import { Resource } from 'server';
 
 interface ResourceCardProps {
   resource: Resource;
