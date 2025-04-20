@@ -1,8 +1,7 @@
+import React from "react";
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { MindfulProvider } from "./context/MindfulContext";
 import NotFound from "@/pages/not-found";
 
@@ -34,16 +33,13 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <MindfulProvider>
-        <TooltipProvider>
-          <Toaster />
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <main className="flex-grow">
-              <Router />
-            </main>
-            <MobileNavigation />
-          </div>
-        </TooltipProvider>
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main className="flex-grow">
+            <Router />
+          </main>
+          <MobileNavigation />
+        </div>
       </MindfulProvider>
     </QueryClientProvider>
   );
