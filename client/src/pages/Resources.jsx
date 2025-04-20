@@ -26,16 +26,16 @@ const Resources = () => {
         setIsLoading(true);
         
         // Fetch all resources
-        const allResourcesData = await apiRequest({
-          url: '/api/resources',
-          method: 'GET'
-        });
+        const allResourcesData = await apiRequest(
+          '/api/resources',
+          { method: 'GET' }
+        );
         
         // Fetch featured resources
-        const featuredResourcesData = await apiRequest({
-          url: '/api/resources/featured',
-          method: 'GET'
-        });
+        const featuredResourcesData = await apiRequest(
+          '/api/resources/featured',
+          { method: 'GET' }
+        );
         
         setAllResources(allResourcesData);
         setFeaturedResources(featuredResourcesData);
