@@ -25,7 +25,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Plus } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
-import { JournalEntry } from '@/types';
 
 const Journal = () => {
   const { user, journalEntries, createJournalEntry } = useMindful();

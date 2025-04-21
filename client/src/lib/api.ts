@@ -1,4 +1,4 @@
-import { Quote, Resource } from 'server';
+import { Quote, Resource } from '../types';
 
 // API for fetching quotes
 export const fetchQuote = async (): Promise<Quote> => {
