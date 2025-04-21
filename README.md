@@ -57,28 +57,18 @@ npm install
 npm run dev
 ```
 
-The application will be available at `https://your-repl-name.your-username.repl.co`
+The application will be available at `https://mindful-moments-2.onrender.com/`
 
 ## Screenshots
-
-![Dashboard](https://raw.githubusercontent.com/yourusername/mindfulme/main/screenshots/dashboard.png)
+![MindfulMe - Cultivate Daily Mindfulness - Google Chrome 21-04-2025 11_02_22](https://github.com/user-attachments/assets/730112aa-8d01-42a6-974a-8999c07c9216)
 *Main dashboard with meditation stats and mood tracking*
 
-![Meditation Timer](https://raw.githubusercontent.com/yourusername/mindfulme/main/screenshots/meditation.png)
+![MindfulMe - Cultivate Daily Mindfulness - Google Chrome 21-04-2025 11_02_33](https://github.com/user-attachments/assets/cda9800d-8a1b-4c2d-80c1-9a20bfa48283)
 *Meditation timer with progress tracking*
 
-![Journal](https://raw.githubusercontent.com/yourusername/mindfulme/main/screenshots/journal.png)
+![MindfulMe - Cultivate Daily Mindfulness - Google Chrome 21-04-2025 11_02_42](https://github.com/user-attachments/assets/987e3dea-b892-434b-8171-bb1739d1a047)
 *Mindfulness journal with mood tracking*
 
-Note: Replace the screenshot URLs with actual screenshots of your application once deployed.
-
-## Deployment
-
-This application is hosted on Replit. To deploy:
-
-1. Click the "Deploy" button in Replit
-2. Configure your deployment settings
-3. Your app will be available at your Replit subdomain
 
 ## License
 
