@@ -1,86 +1,85 @@
 
-# MindfulMe - Cultivate Daily Mindfulness
+# MindfulMe 🧘‍♀️
 
-A full-stack mindfulness application built with React and Express that helps users practice meditation, journal their thoughts, and track their mindfulness journey.
+A full-stack mindfulness application built to help users cultivate daily mindfulness through meditation, journaling, and mood tracking.
+
+## Description
+
+MindfulMe is a comprehensive mindfulness platform that combines meditation timers, mood tracking, journaling capabilities, and curated mindfulness resources. The application helps users maintain a consistent mindfulness practice while tracking their progress and emotional well-being.
 
 ## Features
 
-- **Meditation Timer**: Guided meditation sessions with customizable durations
-- **Mindfulness Journal**: Record thoughts, feelings and reflections
-- **Resource Library**: Access to articles, videos and podcasts about mindfulness
-- **Mood Tracking**: Monitor your emotional wellbeing over time
-- **Progress Statistics**: View your meditation and journaling progress
+- **Guided Meditation Timer** 
+  - Customizable meditation durations
+  - Progress tracking
+  - Multiple ambient sound options
+
+- **Mindfulness Journal**
+  - Daily reflection entries
+  - Mood tracking
+  - Progress visualization
+
+- **Resource Library**
+  - Curated mindfulness articles
+  - Video guides
+  - Downloadable content
+  - Featured resources section
+
+- **Progress Dashboard**
+  - Weekly meditation stats
+  - Mood trends
+  - Activity streaks
+  - Personal insights
 
 ## Tech Stack
 
-- Frontend: React, TypeScript, TailwindCSS
-- Backend: Express.js
-- Database: PostgreSQL with Drizzle ORM
-- State Management: React Query
-- UI Components: Radix UI, Shadcn/ui
+- **Frontend:**
+  - React with TypeScript
+  - TailwindCSS for styling
+  - Shadcn UI components
+  - React Query for state management
+  - Wouter for routing
 
-## Getting Started
+- **Backend:**
+  - Express.js
+  - PostgreSQL with Drizzle ORM
+  - Node.js
+
+## Setup Instructions
 
 1. Fork this template on Replit
 2. Install dependencies:
-
 ```bash
 npm install
 ```
-
 3. Start the development server:
-
 ```bash
 npm run dev
 ```
 
-## Environment Variables Setup
+The application will be available at `https://your-repl-name.your-username.repl.co`
 
-This application requires two important environment variables:
+## Screenshots
 
-### 1. Database URL
-The application needs a PostgreSQL database connection URL. To set this up:
+![Dashboard](https://raw.githubusercontent.com/yourusername/mindfulme/main/screenshots/dashboard.png)
+*Main dashboard with meditation stats and mood tracking*
 
-1. In your workspace, click on "Tools" in the sidebar
-2. Select "Secrets"
-3. Click "+ New Secret"
-4. Add a new secret with:
-   - Key: `DATABASE_URL`
-   - Value: Your PostgreSQL connection string in the format:
-     ```
-     postgresql://username:password@host:port/database
-     ```
+![Meditation Timer](https://raw.githubusercontent.com/yourusername/mindfulme/main/screenshots/meditation.png)
+*Meditation timer with progress tracking*
 
-### 2. Session Secret
-For secure session management:
+![Journal](https://raw.githubusercontent.com/yourusername/mindfulme/main/screenshots/journal.png)
+*Mindfulness journal with mood tracking*
 
-1. Stay in the "Secrets" tool
-2. Click "+ New Secret"
-3. Add a new secret with:
-   - Key: `SESSION_SECRET`
-   - Value: A secure random string (at least 32 characters)
+Note: Replace the screenshot URLs with actual screenshots of your application once deployed.
 
-Note: Never commit these secrets directly in your code.
+## Deployment
 
-### For Users Forking This Project
+This application is hosted on Replit. To deploy:
 
-When you fork this project, you'll need to:
+1. Click the "Deploy" button in Replit
+2. Configure your deployment settings
+3. Your app will be available at your Replit subdomain
 
-1. Set up your own database.
-2. Add your own `SESSION_SECRET` in the Secrets tool
-3. The `DATABASE_URL` will be seen in your database.
-The application will not start properly without these environment variables configured.
+## License
 
-## Project Structure
-
-- `client/`: Frontend React application
-- `server/`: Express backend
-- `shared/`: Shared types and schemas
-- `components/`: Reusable React components
-- `context/`: React context providers
-- `pages/`: Main application pages
-
-## Development
-
-The application runs in development mode with hot reloading enabled. The frontend dev server runs on port 5173 and the backend API on port 5000.
-
+MIT
